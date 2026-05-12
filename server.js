@@ -53,9 +53,9 @@ async function handleSend(req, res) {
   const fromEmail = process.env.RESEND_FROM_EMAIL;
   const recipientEmail = process.env.RESEND_TO_EMAIL || defaultRecipientEmail;
 
-  if (!apiKey || !fromEmail || !recipientEmail) {
+  if (!apiKey || !fromEmail) {
     sendJson(res, 500, {
-      error: "Email is not configured. Set RESEND_API_KEY, RESEND_FROM_EMAIL and RESEND_TO_EMAIL."
+      error: "Email is not configured. Set RESEND_API_KEY and RESEND_FROM_EMAIL."
     });
     return;
   }
@@ -77,7 +77,8 @@ async function handleSend(req, res) {
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "User-Agent": "freak-king-id-card-portal"
       },
       body: JSON.stringify({
         from: fromEmail,

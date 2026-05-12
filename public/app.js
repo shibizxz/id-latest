@@ -617,7 +617,8 @@ async function sendEmail() {
     });
     const result = await response.json().catch(() => ({}));
     if (!response.ok) {
-      throw new Error(result.error || "Email sending failed.");
+      const detail = result.detail ? ` ${String(result.detail).slice(0, 240)}` : "";
+      throw new Error(`${result.error || "Email sending failed."}${detail}`);
     }
     showMessage("Email sent successfully.", true);
   } catch (error) {
