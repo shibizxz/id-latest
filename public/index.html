@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student ID Card Creator</title>
+    <link rel="stylesheet" href="/styles.css?v=20260512-fixed-email" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div class="brand-block">
+          <img class="brand-logo" src="/assets/brand/freak-king-logo.jpeg" alt="Freak King Media logo" />
+          <div>
+            <p class="eyebrow">FREAK KING MEDIA</p>
+            <h1>Student ID Card Creator</h1>
+            <p class="brand-caption">Professional identity starts with a professional ID card printing service.</p>
+          </div>
+        </div>
+        <div class="header-meta">
+          <span>For help and support contact +91 8111985415</span>
+          <span>Live Preview</span>
+          <span>PDF Ready</span>
+        </div>
+      </header>
+
+      <section class="workspace">
+        <form class="panel form-panel" id="studentForm" novalidate>
+          <div class="panel-head">
+            <div>
+              <h2>Student Details</h2>
+              <p>Enter the card content and export the finished ID.</p>
+            </div>
+            <label class="template-select">
+              Template
+              <select id="templateKey" aria-label="Template">
+                <option value="template1">Arafa English School</option>
+                <option value="template2">G H S S Cheruthuruthy</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="school-lock" id="schoolLock">
+            <label>
+              School password
+              <input id="schoolPassword" type="password" autocomplete="current-password" />
+            </label>
+            <button type="button" class="primary" id="unlockSchoolBtn">Unlock</button>
+          </div>
+
+          <div class="section-label">Identity</div>
+          <div class="field-grid">
+            <label>
+              Student name
+              <input id="studentName" name="studentName" autocomplete="off" required />
+            </label>
+            <label>
+              Admission no.
+              <input id="admissionNo" name="admissionNo" autocomplete="off" required />
+            </label>
+            <label>
+              Class
+              <select id="studentClass" name="studentClass" required>
+                <option value="">Select</option>
+                <option>LKG</option>
+                <option>UKG</option>
+                <option>I</option>
+                <option>II</option>
+                <option>III</option>
+                <option>IV</option>
+                <option>V</option>
+                <option>VI</option>
+                <option>VII</option>
+                <option>VIII</option>
+                <option>IX</option>
+                <option>X</option>
+                <option>XI</option>
+                <option>XII</option>
+                <option>Science</option>
+                <option>Commerce</option>
+                <option>Humanities</option>
+                <option>Commerce Maths</option>
+                <option>Commerce Statistics</option>
+              </select>
+            </label>
+            <label>
+              Division
+              <select id="division" name="division" required>
+                <option value="">Select</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+                <option>D</option>
+                <option>E</option>
+                <option>F</option>
+                <option>G</option>
+                <option>H</option>
+                <option>I</option>
+                <option>J</option>
+              </select>
+            </label>
+            <label class="optional-field" data-template-option="bloodGroup">
+              Blood group
+              <select id="bloodGroup" name="bloodGroup">
+                <option>Nill</option>
+                <option>A+</option>
+                <option>A-</option>
+                <option>B+</option>
+                <option>B-</option>
+                <option>O+</option>
+                <option>O-</option>
+                <option>AB+</option>
+                <option>AB-</option>
+              </select>
+            </label>
+            <label>
+              Date of birth
+              <input id="dob" name="dob" type="date" required />
+            </label>
+          </div>
+
+          <div class="section-label">Contact</div>
+          <div class="field-grid">
+            <label>
+              Guardian name
+              <input id="guardianName" name="guardianName" autocomplete="off" required />
+            </label>
+            <label>
+              House name
+              <input id="houseName" name="houseName" autocomplete="off" required />
+            </label>
+            <label>
+              Place
+              <input id="place" name="place" autocomplete="off" required />
+            </label>
+            <label>
+              Phone
+              <span class="phone-input">
+                <span>+91</span>
+                <input id="phone" name="phone" inputmode="numeric" maxlength="10" required />
+              </span>
+            </label>
+          </div>
+
+          <div class="photo-row">
+            <div class="photo-status">
+              <span>Photo</span>
+              <strong id="photoStatus">Not selected</strong>
+            </div>
+            <label class="file-button">
+              Upload
+              <input id="photoInput" type="file" accept="image/*" />
+            </label>
+          </div>
+
+          <p class="message" id="message" role="status"></p>
+
+          <div class="actions">
+            <button type="button" id="printBtn">Print</button>
+            <button type="button" id="pdfBtn">PDF</button>
+            <button type="button" class="primary" id="sendEmailBtn">Send Email</button>
+          </div>
+        </form>
+
+        <section class="preview-column" aria-label="Live ID preview">
+          <div class="preview-toolbar">
+            <div>
+              <p class="eyebrow">Selected Card</p>
+              <h2>Preview</h2>
+            </div>
+          </div>
+          <div class="card-stage">
+            <div class="id-card" id="cardPreview">
+              <img class="template-bg" id="templateBg" alt="" />
+              <img class="photo-layer" id="photoLayer" alt="" />
+              <div class="editable-layer" id="editableLayer"></div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <dialog class="crop-dialog" id="cropDialog">
+      <div class="crop-shell">
+        <canvas id="cropCanvas" width="360" height="480"></canvas>
+        <label class="crop-shape-label">
+          Crop shape
+          <select id="cropShape">
+            <option value="circle" selected>Circle</option>
+            <option value="rectangle">Rectangle</option>
+          </select>
+        </label>
+        <label class="zoom-label">
+          Zoom
+          <input id="zoomRange" type="range" min="1" max="3" value="1" step="0.01" />
+        </label>
+        <div class="actions compact">
+          <button type="button" id="cancelCropBtn">Cancel</button>
+          <button type="button" class="primary" id="applyCropBtn">Apply crop</button>
+        </div>
+      </div>
+    </dialog>
+
+    <script src="/app.js?v=20260512-email-phone"></script>
+  </body>
+</html>
